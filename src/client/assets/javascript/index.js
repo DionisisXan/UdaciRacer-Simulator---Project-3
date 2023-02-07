@@ -84,31 +84,20 @@ async function handleCreateRace() {
 
 	try {		
 
-
 	!store.track_id ? alert("Select track!") : (!store.player_id ? alert("Select driver!") : null);
-
-	// render starting UI
-
+	
 	const race = await createRace(store.player_id, store.track_id);
 
 	console.log(`New Race - Track: ${race.Track}, Race: ${race.ID}`);
 	console.log('Track:', track);
     console.log('Race:', race);
 
-
-	  	// render starting UI
+	  	
 	renderAt('#race', renderRaceStartView(race.Track))
 
-	
-
-
-
-	// TODO - Get player_id and track_id from the store
-	
+			
 	store.race_id = race.ID;
-
-	// const race = TODO - invoke the API call to create the race, then save the result
-
+	
 	await runCountdown()
 
 	await startRace(store.race_id);
@@ -195,13 +184,13 @@ function handleSelectPodRacer(target) {
 function handleSelectTrack(target) {
 	console.log("selected a track", target.id)
 
-	// remove class selected from all track options
+	
 	const selected = document.querySelector('#tracks .selected')
 	if(selected) {
 		selected.classList.remove('selected')
 	}
 	else {
-	// add class selected to current target
+	
 	target.classList.add('selected')
 
 	// TODO - save the selected track id to the store
@@ -339,7 +328,7 @@ function resultsView(positions) {
 }
 
 function raceProgress(positions) {
-	let userPlayer = positions.find(e => e.id === store.player_id)
+	let userPlayer = positions.find(e => e.id == store.player_id)
 	userPlayer.driver_name += " (you)"
 
 	positions = positions.sort((a, b) => (a.segment > b.segment) ? -1 : 1)
@@ -452,7 +441,7 @@ async function getRace(id) {
   }
   
 
-// exo minei edo kai katw
+
    
 function startRace(id) {
 	try {
@@ -466,7 +455,7 @@ function startRace(id) {
 	  };
   
 	  return fetch(`${SERVER}/api/races/${racing}/start`, fetchOptions)
-		.catch(err => console.log("Problem with startRace request:", err))
+		.catch(err => console.log("Problem with the request:", err))
 	} catch (error) {
 	  console.log(`startRace: ${error}`);
 	}
